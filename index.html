@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTRODUCCIÓN A LA FISICOQUÍMICA - Gases Ideales y Biofísica Respiratoria (Facultad de Cs. Médicas - UCCuyo)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Outfit & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #f7f9f6;
+            color: #1e293b;
+        }
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        /* Paleta Institucional UCCuyo (Verde Oliva) */
+        .text-accent { color: #436600; }
+        .bg-accent { background-color: #436600; }
+        .bg-accent-hover:hover { background-color: #324d00; }
+        .bg-accent-light { background-color: #f1f6eb; }
+        .border-accent { border-color: #436600; }
+
+        .text-primary { color: #436600; }
+        .bg-primary { background-color: #436600; }
+        .bg-primary-dark { background-color: #324d00; }
+        .border-primary { border-color: #436600; }
+        
+        .focus-accent:focus {
+            border-color: #436600;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 102, 0, 0.2);
+        }
+        
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Custom Range Sliders */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 999px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #436600;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -6px;
+            box-shadow: 0 2px 6px rgba(67, 102, 0, 0.4);
+            border: 2px solid #ffffff;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            background: #324d00;
+        }
+        input[type=range]:disabled::-webkit-slider-thumb {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-accent/20 text-gray-800">
+
+    <!-- Cabecera Institucional UCCuyo -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+                    FQ
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-gray-800 tracking-wide uppercase">INTRODUCCIÓN A LA FISICOQUÍMICA</h1>
+                    <p class="text-xs text-gray-500 font-semibold">Lic. en Kinesiología y Fisiatría (Facultad de Cs. Médicas - UCCuyo)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <!-- Botón Formulario -->
+                <button onclick="openFormulasModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+                    <i class="fa-solid fa-book-bookmark text-accent"></i>
+                    <span class="hidden sm:inline">Formulario</span>
+                </button>
+                <!-- Botón Guía de Uso -->
+                <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Guía de Uso
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal con Barra Lateral -->
+    <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+        
+        <!-- Menú de Navegación Lateral -->
+        <nav class="w-full lg:w-64 flex flex-row lg:flex-col gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit">
+            <button onclick="switchTab('tab-estado')" id="btn-tab-estado" class="bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm">
+                1. Ecuación de Estado
+            </button>
+            <button onclick="switchTab('tab-particulares')" id="btn-tab-particulares" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                2. Leyes Particulares
+            </button>
+            <button onclick="switchTab('tab-general')" id="btn-tab-general" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                3. Ley General de Gases
+            </button>
+            <button onclick="switchTab('tab-respiratoria')" id="btn-tab-respiratoria" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                4. Biomecánica Respiratoria
+            </button>
+            <button onclick="switchTab('tab-casos')" id="btn-tab-casos" class="text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition">
+                5. Casos Clínicos & Biofísica
+            </button>
+        </nav>
+
+        <!-- Área de Contenido Dinámico -->
+        <div class="flex-1 space-y-6">
+
+            <!-- ==========================================
+                 MÓDULO 1: ECUACIÓN DE ESTADO (P·V = n·R·T)
+                 ========================================== -->
+            <section id="tab-estado" class="module-section space-y-6">
+                <!-- Banner del Módulo 1 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 1 • Fundamentos Termodinámicos</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Gases Ideales y Ecuación de Estado</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Modelo cinético-molecular de partículas puntuales y la relación cuantitativa P &middot; V = n &middot; R &middot; T.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-accent-light px-3.5 py-2 rounded-xl border border-accent/20 font-mono text-xs font-bold text-accent">
+                            <i class="fa-solid fa-atom"></i>
+                            <span>R = 0.08205 atm&middot;L/(mol&middot;K)</span>
+                        </div>
+                    </div>
+
+                    <!-- Postulados del Gas Ideal -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4">
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-circle-dot text-accent"></i> Volumen Propio Nulo
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">Las partículas gaseosas se consideran masas puntuales; su volumen individual es despreciable respecto al volumen total del recipiente.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-ban text-accent"></i> Sin Fuerzas Intermoleculares
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">No existen interacciones de atracción ni repulsión entre moléculas salvo durante los choques elásticos instantáneos contra las paredes.</p>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                            <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5 mb-1">
+                                <i class="fa-solid fa-bolt text-accent"></i> Energía Cinética Media
+                            </div>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">La energía cinética promedio de las partículas depende exclusivamente de la temperatura absoluta (T en Kelvin): a mayor T, mayor velocidad.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cámara de Émbolo y Controles Termodinámicos -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Cámara de Émbolo Canvas -->
+                    <div class="lg:col-span-7 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fa-solid fa-microscope text-accent"></i>
+                                    Cámara Termodinámica de Émbolo Móvil
+                                </h3>
+                                <p class="text-xs text-slate-500">Observa en tiempo real los choques moleculares y la variación de altura del émbolo.</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-accent-light text-accent border border-accent/20" id="m1-collision-rate">
+                                Impactos: 0 /s
+                            </span>
+                        </div>
+
+                        <div class="relative bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-inner h-80">
+                            <canvas id="m1-canvas" class="w-full h-full block"></canvas>
+                            <!-- Telemetría HUD -->
+                            <div class="absolute top-3 left-3 bg-slate-900/85 backdrop-blur border border-slate-700 rounded-lg p-2.5 text-xs font-mono text-slate-200 space-y-1 pointer-events-none">
+                                <div class="text-lime-400 font-bold">ESTADO TERMODINÁMICO</div>
+                                <div>Presión (P): <span id="m1-hud-p" class="text-white font-bold">1.00</span> atm</div>
+                                <div>Volumen (V): <span id="m1-hud-v" class="text-white font-bold">24.45</span> L</div>
+                                <div>Moles (n): <span id="m1-hud-n" class="text-white font-bold">1.00</span> mol</div>
+                                <div>Temp. (T): <span id="m1-hud-t" class="text-white font-bold">298</span> K (<span id="m1-hud-tc">25</span> &deg;C)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controles de Variables Termodinámicas -->
+                    <div class="lg:col-span-5 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 mb-1">Ajuste de Variables</h3>
+                            <p class="text-xs text-slate-500 mb-4">Modifica cantidad de sustancia, volumen o temperatura y verifica el cálculo de presión.</p>
+
+                            <div class="space-y-4">
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                        <span>Cantidad de Sustancia (n):</span>
+                                        <span id="m1-val-n" class="font-mono text-accent font-bold">1.00 mol</span>
+                                    </div>
+                                    <input type="range" id="m1-slider-n" min="0.2" max="3.0" step="0.1" value="1.0" oninput="updateModule1()">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                        <span>Volumen del Recipiente (V):</span>
+                                        <span id="m1-val-v" class="font-mono text-accent font-bold">24.45 L</span>
+                                    </div>
+                                    <input type="range" id="m1-slider-v" min="5.0" max="50.0" step="0.5" value="24.45" oninput="updateModule1()">
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                                        <span>Temperatura Absoluta (T):</span>
+                                        <span id="m1-val-t" class="font-mono text-accent font-bold">298 K (25 &deg;C)</span>
+                                    </div>
+                                    <input type="range" id="m1-slider-t" min="150" max="600" step="5" value="298" oninput="updateModule1()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comprobador Interactivo -->
+                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                            <span class="font-bold text-slate-700 uppercase block mb-1">Verificación de la Ecuación de Estado:</span>
+                            <div class="font-mono text-center py-2 bg-white rounded-lg border border-slate-200 font-bold text-slate-800" id="m1-equation-preview">
+                                P = (n &middot; R &middot; T) / V = 1.00 atm
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MÓDULO 2: ESTACIÓN DE LEYES PARTICULARES
+                 ========================================== -->
+            <section id="tab-particulares" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 2 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 2 • Leyes Empíricas</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Leyes Particulares de los Gases</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Estudio de procesos isotérmicos, isobáricos e isocóricos manteniendo una variable fija.</p>
+                        </div>
+                        <!-- Selector de Ley -->
+                        <div class="flex gap-1.5 p-1 bg-slate-100 rounded-xl">
+                            <button onclick="selectParticularLaw('boyle')" id="btn-law-boyle" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-accent text-white shadow-xs transition">Boyle (T cte)</button>
+                            <button onclick="selectParticularLaw('charles')" id="btn-law-charles" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">Charles (P cte)</button>
+                            <button onclick="selectParticularLaw('gay')" id="btn-law-gay" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition">Gay-Lussac (V cte)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Curva y Banco Comparador -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Gráfico Canvas de la Ley -->
+                    <div class="lg:col-span-7 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 id="m2-graph-title" class="text-base font-bold text-slate-800">Curva Isotérmica: Presión vs. Volumen</h3>
+                                <p id="m2-graph-subtitle" class="text-xs text-slate-500">Relación inversamente proporcional a temperatura y moles constantes.</p>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 bg-slate-100 rounded-md text-slate-700 font-bold" id="m2-constant-indicator">T = 300 K (Constante)</span>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-xl border border-slate-200 p-3 h-80 relative">
+                            <canvas id="m2-chart-canvas" class="w-full h-full block"></canvas>
+                        </div>
+
+                        <div id="m2-theory-explanation" class="p-3.5 rounded-xl bg-accent-light border border-accent/20 text-xs text-slate-700 leading-relaxed">
+                            <strong>Fundamento Físico (Boyle-Mariotte):</strong> Al reducir el volumen a la mitad manteniendo T constante, las partículas chocan con el doble de frecuencia contra las paredes, duplicando la presión (P₁ &middot; V₁ = P₂ &middot; V₂).
+                        </div>
+                    </div>
+
+                    <!-- Comparador de Estados -->
+                    <div class="lg:col-span-5 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+                        <div>
+                            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2 mb-3">
+                                <i class="fa-solid fa-sliders text-accent"></i>
+                                Comparador de Estados (Estado 1 &rarr; Estado 2)
+                            </h3>
+
+                            <div class="grid grid-cols-2 gap-3 text-xs font-mono mb-4">
+                                <div class="p-3 rounded-xl bg-slate-100 border border-slate-200">
+                                    <div class="font-bold text-slate-500 mb-1">ESTADO INICIAL (1)</div>
+                                    <div id="m2-state1-varA">P₁ = 2.00 atm</div>
+                                    <div id="m2-state1-varB">V₁ = 12.00 L</div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-accent-light border border-accent/20 text-slate-900">
+                                    <div class="font-bold text-accent mb-1">ESTADO FINAL (2)</div>
+                                    <div id="m2-state2-varA" class="font-bold">P₂ = 1.20 atm</div>
+                                    <div id="m2-state2-varB" class="font-bold">V₂ = 20.00 L</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between text-xs font-semibold mb-1">
+                                    <span id="m2-slider-label" class="text-slate-700">Modificar Volumen Final (V₂):</span>
+                                    <span id="m2-slider-val" class="font-mono text-accent font-bold">20.0 L</span>
+                                </div>
+                                <input type="range" id="m2-slider" min="4" max="40" step="0.5" value="20" oninput="updateModule2()">
+                            </div>
+                        </div>
+
+                        <div class="p-3.5 rounded-xl bg-slate-900 text-lime-400 font-mono text-xs text-center" id="m2-equation-substitution">
+                            (2.00 atm) &middot; (12.00 L) = (1.20 atm) &middot; (20.00 L) = 24.00 atm&middot;L
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MÓDULO 3: TALLER DE LA LEY GENERAL
+                 ========================================== -->
+            <section id="tab-general" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 3 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 3 • Ley Combinada</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Taller de la Ley General de los Gases</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Transición simultánea de Presión, Volumen y Temperatura para una cantidad fija de sustancia (n = cte).</p>
+                        </div>
+                        <div class="px-3.5 py-1.5 rounded-xl bg-accent text-white font-mono text-xs font-bold shadow-xs">
+                            (P₁ &middot; V₁) / T₁ = (P₂ &middot; V₂) / T₂
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banco de Simulación de la Ley General -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-12 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Estado 1 -->
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+                                <span class="text-xs font-bold uppercase text-slate-700 block border-b border-slate-200 pb-1">
+                                    <i class="fa-solid fa-play text-accent mr-1"></i> Estado Inicial (1)
+                                </span>
+                                <div>
+                                    <label class="text-xs font-semibold text-slate-700 flex justify-between">
+                                        <span>Presión Inicial (P₁):</span>
+                                        <span id="m3-lbl-p1" class="font-mono font-bold text-accent">1.00 atm</span>
+                                    </label>
+                                    <input type="range" id="m3-p1" min="0.5" max="5.0" step="0.1" value="1.0" oninput="updateModule3()">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-slate-700 flex justify-between">
+                                        <span>Volumen Inicial (V₁):</span>
+                                        <span id="m3-lbl-v1" class="font-mono font-bold text-accent">20.0 L</span>
+                                    </label>
+                                    <input type="range" id="m3-v1" min="5.0" max="50.0" step="0.5" value="20.0" oninput="updateModule3()">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-slate-700 flex justify-between">
+                                        <span>Temperatura Inicial (T₁):</span>
+                                        <span id="m3-lbl-t1" class="font-mono font-bold text-accent">300 K</span>
+                                    </label>
+                                    <input type="range" id="m3-t1" min="200" max="500" step="5" value="300" oninput="updateModule3()">
+                                </div>
+                            </div>
+
+                            <!-- Estado 2 -->
+                            <div class="p-4 rounded-xl bg-accent-light/50 border border-accent/20 space-y-3">
+                                <div class="flex items-center justify-between border-b border-accent/20 pb-1">
+                                    <span class="text-xs font-bold uppercase text-slate-800">
+                                        <i class="fa-solid fa-forward text-accent mr-1"></i> Estado Final (2)
+                                    </span>
+                                    <div class="flex items-center gap-1.5 text-xs">
+                                        <span class="text-slate-600 font-semibold">Incógnita:</span>
+                                        <select id="m3-solve-target" onchange="updateModule3()" class="font-mono font-bold bg-white border border-slate-300 rounded px-2 py-0.5 text-xs text-accent">
+                                            <option value="V2">Despejar V₂</option>
+                                            <option value="P2">Despejar P₂</option>
+                                            <option value="T2">Despejar T₂</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-slate-700 flex justify-between">
+                                        <span>Presión Final (P₂):</span>
+                                        <span id="m3-lbl-p2" class="font-mono font-bold text-accent">2.00 atm</span>
+                                    </label>
+                                    <input type="range" id="m3-p2" min="0.5" max="8.0" step="0.1" value="2.0" oninput="updateModule3()">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-slate-700 flex justify-between">
+                                        <span>Volumen Final (V₂):</span>
+                                        <span id="m3-lbl-v2" class="font-mono font-bold text-accent">15.0 L</span>
+                                    </label>
+                                    <input type="range" id="m3-v2" min="5.0" max="50.0" step="0.5" value="15.0" oninput="updateModule3()">
+                                </div>
+                                <div>
+                                    <label class="text-xs font-semibold text-slate-700 flex justify-between">
+                                        <span>Temperatura Final (T₂):</span>
+                                        <span id="m3-lbl-t2" class="font-mono font-bold text-accent">450 K</span>
+                                    </label>
+                                    <input type="range" id="m3-t2" min="200" max="600" step="5" value="450" oninput="updateModule3()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Panel de Despeje y Constante Invariante -->
+                        <div class="p-4 rounded-xl bg-slate-900 text-white space-y-2">
+                            <div class="flex flex-wrap items-center justify-between text-xs font-mono">
+                                <span class="text-lime-400">INVARIANCIA: (P &middot; V) / T = n &middot; R = Constante</span>
+                                <span id="m3-ratio-constant" class="bg-white/10 px-2.5 py-0.5 rounded border border-white/20">k = 0.0667 atm&middot;L/K</span>
+                            </div>
+                            <div id="m3-algebraic-step" class="text-center font-mono text-sm py-2.5 bg-slate-800 rounded-lg border border-slate-700 text-amber-300">
+                                V₂ = (P₁ &middot; V₁ &middot; T₂) / (T₁ &middot; P₂) = 15.00 L
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MÓDULO 4: BIOMECÁNICA RESPIRATORIA
+                 ========================================== -->
+            <section id="tab-respiratoria" class="module-section space-y-6 hidden">
+                <!-- Banner del Módulo 4 -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 4 • Biofísica Aplicada</span>
+                            <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Mecánica Ventilatoria y Difusión Alveolar</h2>
+                            <p class="text-xs sm:text-sm text-slate-600 mt-0.5">Aplicación de la Ley de Boyle en la mecánica pulmonar y difusión pasiva por gradientes de presión parcial.</p>
+                        </div>
+                        <span class="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl border border-slate-200">Patm = 760 mmHg</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <!-- Parte A: Mecánica Ventilatoria (Ley de Boyle) -->
+                    <div class="lg:col-span-6 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-sky-100 text-sky-800">
+                                    Parte A: Mecánica Ventilatoria (Boyle)
+                                </span>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800">Volumen Torácico vs. Presión Alveolar</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">A temperatura corporal constante (37 &deg;C), el cambio de volumen pulmonar genera gradientes de presión que impulsan el flujo de aire.</p>
+                        </div>
+
+                        <!-- SVG de Pulmones y Diafragma -->
+                        <div class="bg-slate-900 rounded-xl p-4 relative overflow-hidden border border-slate-800 flex flex-col items-center">
+                            <div class="w-full flex justify-between text-xs font-mono text-slate-300 mb-2">
+                                <span id="bio-phase-badge" class="px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold">EN REPOSO (APNEA)</span>
+                                <span id="bio-airflow-indicator" class="text-sky-300">Flujo Neto: 0 L/s</span>
+                            </div>
+
+                            <svg id="lung-svg" viewBox="0 0 360 230" class="w-full max-w-md h-48 select-none">
+                                <!-- Tráquea y Bronquios -->
+                                <path d="M172,10 L172,70 L135,105 M188,10 L188,70 L225,105" stroke="#94a3b8" stroke-width="8" fill="none" stroke-linecap="round"/>
+                                <!-- Flechas de Flujo -->
+                                <g id="svg-air-arrows" opacity="0">
+                                    <path id="svg-arrow-path" d="M180,18 L180,58" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+                                </g>
+                                <!-- Pulmones Izquierdo y Derecho -->
+                                <g id="svg-lungs-group" style="transform-origin: 180px 115px; transition: transform 0.25s ease-out;">
+                                    <path d="M165,78 C120,65 85,105 85,155 C85,180 125,185 162,175 Z" fill="#f43f5e" fill-opacity="0.75" stroke="#fb7185" stroke-width="3"/>
+                                    <path d="M195,78 C240,65 275,105 275,155 C275,180 235,185 198,175 Z" fill="#f43f5e" fill-opacity="0.75" stroke="#fb7185" stroke-width="3"/>
+                                </g>
+                                <!-- Diafragma Móvil -->
+                                <path id="svg-diaphragm" d="M70,195 Q180,165 290,195" stroke="#10b981" stroke-width="7" fill="none" stroke-linecap="round" style="transition: d 0.25s ease-out;"/>
+                                <text x="135" y="222" fill="#10b981" font-size="10" font-weight="bold">Diafragma</text>
+                            </svg>
+
+                            <!-- Medidores Alveolares -->
+                            <div class="grid grid-cols-2 gap-2 w-full mt-2 font-mono text-xs">
+                                <div class="bg-slate-800 p-2 rounded text-center">
+                                    <span class="text-slate-400 block text-[10px]">P. Alveolar (Palv):</span>
+                                    <span id="bio-palv-val" class="text-white font-bold">760.0 mmHg</span>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded text-center">
+                                    <span class="text-slate-400 block text-[10px]">Gradiente (&Delta;P):</span>
+                                    <span id="bio-grad-val" class="text-sky-400 font-bold">0.0 mmHg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slider Diafragmático -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-700">Movimiento Diafragmático / Respiración:</span>
+                                <span id="bio-slider-label" class="font-mono text-accent font-bold">Reposo (0%)</span>
+                            </div>
+                            <input type="range" id="bio-diaphragm-slider" min="-100" max="100" step="5" value="0" oninput="updateVentilationSimulator()">
+                            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                                <span>&larr; Espiración (Presión &uarr;)</span>
+                                <span>Inspiración (Presión &darr;) &rarr;</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Parte B: Presiones Parciales y Hematosis -->
+                    <div class="lg:col-span-6 bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-rose-100 text-rose-800">
+                                    Parte B: Presiones Parciales & Hematosis
+                                </span>
+                                <select id="bio-condition-select" onchange="updatePartialPressuresCondition()" class="text-xs bg-slate-100 border border-slate-300 rounded-lg px-2.5 py-1 font-semibold text-slate-700">
+                                    <option value="normal">Nivel del Mar (Normal)</option>
+                                    <option value="altitude">Gran Altitud (Hipoxia Hipobárica)</option>
+                                    <option value="hyperoxia">Oxigenoterapia Clínica</option>
+                                </select>
+                            </div>
+                            <h3 class="text-base font-bold text-slate-800">Intercambio Alvéolo-Capilar (PO₂ y PCO₂)</h3>
+                            <p class="text-xs text-slate-500 mt-0.5">Cada gas difunde pasivamente a favor de su propio gradiente de presión parcial.</p>
+                        </div>
+
+                        <!-- Canvas de Difusión Alvéolo-Capilar -->
+                        <div class="bg-slate-900 rounded-xl overflow-hidden border border-slate-800 relative h-52">
+                            <canvas id="bio-diffusion-canvas" class="w-full h-full block"></canvas>
+                        </div>
+
+                        <!-- Tabla de Presiones Parciales -->
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="p-3 rounded-xl bg-sky-50 border border-sky-200 space-y-1">
+                                <div class="font-bold text-sky-900 flex items-center justify-between">
+                                    <span>OXÍGENO (O₂)</span>
+                                    <span class="px-2 py-0.5 rounded bg-sky-200 text-sky-900 font-mono text-[10px]">Alvéolo &rarr; Sangre</span>
+                                </div>
+                                <div class="flex justify-between font-mono text-slate-700">
+                                    <span>PO₂ Alveolar:</span>
+                                    <strong id="pp-alv-o2">104 mmHg</strong>
+                                </div>
+                                <div class="flex justify-between font-mono text-slate-700">
+                                    <span>PO₂ Capilar:</span>
+                                    <strong id="pp-cap-o2">40 mmHg</strong>
+                                </div>
+                                <div class="pt-1 border-t border-sky-200 flex justify-between font-mono font-bold text-sky-800">
+                                    <span>Gradiente &Delta;PO₂:</span>
+                                    <span id="pp-grad-o2">+64 mmHg</span>
+                                </div>
+                            </div>
+
+                            <div class="p-3 rounded-xl bg-accent-light border border-accent/20 space-y-1">
+                                <div class="font-bold text-slate-900 flex items-center justify-between">
+                                    <span>DIÓXIDO DE CARBONO (CO₂)</span>
+                                    <span class="px-2 py-0.5 rounded bg-accent/20 text-accent font-mono text-[10px]">Sangre &rarr; Alvéolo</span>
+                                </div>
+                                <div class="flex justify-between font-mono text-slate-700">
+                                    <span>PCO₂ Capilar:</span>
+                                    <strong id="pp-cap-co2">45 mmHg</strong>
+                                </div>
+                                <div class="flex justify-between font-mono text-slate-700">
+                                    <span>PCO₂ Alveolar:</span>
+                                    <strong id="pp-alv-co2">40 mmHg</strong>
+                                </div>
+                                <div class="pt-1 border-t border-accent/20 flex justify-between font-mono font-bold text-accent">
+                                    <span>Gradiente &Delta;PCO₂:</span>
+                                    <span id="pp-grad-co2">+5 mmHg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 MÓDULO 5: CASOS CLÍNICOS KINESIOLÓGICOS
+                 ========================================== -->
+            <section id="tab-casos" class="module-section space-y-6 hidden">
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                    <span class="text-xs font-bold uppercase tracking-wider text-accent bg-accent-light px-2.5 py-1 rounded-md border border-accent/20">Módulo 5 • Integración Clínica</span>
+                    <h2 class="text-xl font-extrabold text-slate-800 mt-1.5">Taller de Casos Clínicos Kinesiológicos y Biofísica</h2>
+                    <p class="text-sm text-slate-600 mt-0.5">Aplica los principios de gases ideales, la ley de Boyle y los gradientes de difusión a escenarios asistenciales reales.</p>
+                </div>
+
+                <div class="space-y-4 text-xs sm:text-sm">
+                    <!-- Caso 1 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-accent text-sm">Caso 1: Neumotórax Traumático Abierto y Pérdida de Presión Subatmosférica</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 bg-accent-light text-accent rounded-full border border-accent/20">Mecánica Ventilatoria</span>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">
+                            Un paciente ingresa a urgencias con una herida punzopenetrante en la pared torácica. Al comunicarse el espacio intrapleural con la atmósfera exterior, se escucha un silbido audible con cada esfuerzo respiratorio y el hemitórax afectado no expande durante la inspiración:
+                        </p>
+                        <strong class="block text-gray-800">¿Qué principio biofísico y ley de los gases explica el colapso pulmonar en este cuadro?</strong>
+                        <div class="space-y-2 pt-1">
+                            <button onclick="checkCaseFQ3(1, 'A')" class="w-full p-2.5 rounded-xl border border-gray-200 hover:border-accent text-left transition bg-gray-50">
+                                A) La presión intrapleural es normalmente subatmosférica (-5 cmH₂O); al entrar aire exterior, la presión se iguala a la atmosférica y desaparece la fuerza de tracción transmural que mantiene distendidos los alvéolos (Ley de Boyle), colapsando el pulmón por su retracción elástica.
+                            </button>
+                            <button onclick="checkCaseFQ3(1, 'B')" class="w-full p-2.5 rounded-xl border border-gray-200 hover:border-accent text-left transition bg-gray-50">
+                                B) La temperatura del tórax desciende bruscamente a 0 K, anulando el volumen de las moléculas según la Ley de Charles.
+                            </button>
+                        </div>
+                        <div id="feedback-fq3-1" class="hidden mt-2 p-3 rounded-xl text-xs leading-relaxed"></div>
+                    </div>
+
+                    <!-- Caso 2 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-accent text-sm">Caso 2: Administración de Gas Medicinal y Corrección Térmica (BTPS)</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 bg-accent-light text-accent rounded-full border border-accent/20">Ley General de Gases</span>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">
+                            Un kinesiólogo en terapia intensiva administra oxígeno medicinal almacenado en un cilindro hospitalario a 20 &deg;C (293 K) hacia la vía aérea de un paciente cuya temperatura corporal es de 37 &deg;C (310 K):
+                        </p>
+                        <strong class="block text-gray-800">Según la Ley General y la Ley de Charles, ¿qué ocurre con el volumen del gas inspirado al entrar a la vía aérea pulmonar si la presión se mantiene constante?</strong>
+                        <div class="space-y-2 pt-1">
+                            <button onclick="checkCaseFQ3(2, 'A')" class="w-full p-2.5 rounded-xl border border-gray-200 hover:border-accent text-left transition bg-gray-50">
+                                A) El volumen se reduce a la mitad porque el calor corporal destruye las partículas gaseosas.
+                            </button>
+                            <button onclick="checkCaseFQ3(2, 'B')" class="w-full p-2.5 rounded-xl border border-gray-200 hover:border-accent text-left transition bg-gray-50">
+                                B) El volumen del gas se expande directamente proporcional a la temperatura absoluta (V₁/T₁ = V₂/T₂), ocupando mayor volumen en el árbol bronquial y requiriendo acondicionamiento de humedad y temperatura.
+                            </button>
+                        </div>
+                        <div id="feedback-fq3-2" class="hidden mt-2 p-3 rounded-xl text-xs leading-relaxed"></div>
+                    </div>
+
+                    <!-- Caso 3 -->
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-accent text-sm">Caso 3: Edema Pulmonar y Gradiente de Difusión de Oxígeno</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 bg-accent-light text-accent rounded-full border border-accent/20">Presiones Parciales & Hematosis</span>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed">
+                            Un paciente con insuficiencia cardíaca presenta acúmulo de líquido intersticial en la barrera alvéolo-capilar (edema pulmonar). El monitoreo de gases arteriales revela hipoxemia severa (PO₂ muy disminuida) pero niveles de PCO₂ inicialmente normales:
+                        </p>
+                        <strong class="block text-gray-800">¿Qué fundamento físico explica por qué el oxígeno se afecta antes y en mayor medida que el dióxido de carbono ante el engrosamiento de la barrera de difusión?</strong>
+                        <div class="space-y-2 pt-1">
+                            <button onclick="checkCaseFQ3(3, 'A')" class="w-full p-2.5 rounded-xl border border-gray-200 hover:border-accent text-left transition bg-gray-50">
+                                A) Aunque el gradiente de presión de O₂ es alto (+64 mmHg), el CO₂ es unas 20 veces más soluble en medios acuosos que el O₂; al engrosarse la membrana por líquido, la difusión del O₂ se enlentece críticamente mientras el CO₂ difunde con mayor facilidad.
+                            </button>
+                            <button onclick="checkCaseFQ3(3, 'B')" class="w-full p-2.5 rounded-xl border border-gray-200 hover:border-accent text-left transition bg-gray-50">
+                                B) El oxígeno no se difunde por gradiente de presión sino por transporte activo que consume ATP en los alvéolos.
+                            </button>
+                        </div>
+                        <div id="feedback-fq3-3" class="hidden mt-2 p-3 rounded-xl text-xs leading-relaxed"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal: Guía de Uso del Simulador -->
+    <div id="modal-tutorial" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-accent p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                    <h3 class="font-bold text-base">Guía de Uso del Simulador y Orientación Pedagógica</h3>
+                </div>
+                <button onclick="closeTutorial()" class="text-white hover:text-gray-200 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-5 text-xs md:text-sm text-gray-600 custom-scroll leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye"></i> 1. Propósito Tecnopedagógico
+                    </h4>
+                    <p>
+                        Este simulador interactivo está desarrollado para estudiantes del curso de ingreso a la <strong>Licenciatura en Kinesiología y Fisiatría (Facultad de Ciencias Médicas - Universidad Católica de Cuyo)</strong>. Su objetivo es articular los principios fisicoquímicos del <strong>gas ideal</strong>, las <strong>leyes empíricas particulares</strong> (Boyle, Charles y Gay-Lussac) y la <strong>ley general combinada</strong> con la <strong>biomecánica respiratoria</strong> y la <strong>hematosis alvéolo-capilar</strong>.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-2 text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-compass"></i> 2. Guía Detallada de Módulos y Herramientas Interactivas
+                    </h4>
+                    
+                    <div class="space-y-3.5">
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-microscope"></i> Módulo 1: Ecuación de Estado (P&middot;V = n&middot;R&middot;T)
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Cámara de Émbolo Móvil:</strong> Manipulá la cantidad de sustancia (n), el volumen (V) y la temperatura absoluta (T). Observá la posición dinámica del émbolo, la telemetría en tiempo real (P, V, n, T en Kelvin y Celsius) y la tasa estimada de impactos moleculares por segundo.<br>
+                                • <strong>Verificación Algebraica:</strong> Visualizá el reemplazo cuantitativo paso a paso con la constante universal R = 0.08205 atm&middot;L/(mol&middot;K).
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-chart-line"></i> Módulo 2: Estación de Leyes Particulares
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Procesos Termodinámicos Conmutables:</strong> Alterná entre <em>Boyle-Mariotte</em> (isotérmico: P₁&middot;V₁ = P₂&middot;V₂), <em>Charles</em> (isobárico: V₁/T₁ = V₂/T₂) y <em>Gay-Lussac</em> (isocórico: P₁/T₁ = P₂/T₂).<br>
+                                • <strong>Curvas Cartesiana y Tablas de Estados:</strong> Trazado interactivo de isotermas, isóbaras e isócoras con puntos de estado (Estado 1 inicial y Estado 2 dinámico) y comprobación del producto o cociente constante.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-scale-balanced"></i> Módulo 3: Taller de la Ley General de los Gases
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Banco Comparador de Triple Variable:</strong> Compará Estados 1 y 2 para una masa fija de gas confinado.<br>
+                                • <strong>Selector de Despeje y Cálculo de Invarianza:</strong> Seleccioná la incógnita a calcular (V₂, P₂ o T₂), visualizá el desarrollo algebraico formal y comprobá en vivo la constante de invarianza <em>k = (P&middot;V)/T = n&middot;R</em>.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-lungs"></i> Módulo 4: Biomecánica Respiratoria y Presiones Parciales
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Mecánica Ventilatoria Dinámica:</strong> Desplazá el control del diafragma para alternar entre inspiración activa (descenso diafragmático, aumento de volumen torácico y presión subatmosférica alveolar) y espiración pasiva/forzada, con telemetría de presiones intraalveolar e intrapleural.<br>
+                                • <strong>Intercambio Alvéolo-Capilar (Hematosis):</strong> Observá la animación de difusión de partículas moleculares a través de la membrana alvéolo-capilar según las presiones parciales de O₂ y CO₂ bajo 3 escenarios clínicos seleccionables (Nivel del mar, Gran altitud y Oxigenoterapia).
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-stethoscope"></i> Módulo 5: Casos Clínicos y Razonamiento Biofísico
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • <strong>Escenarios Asistenciales Aplicados:</strong> Análisis de tres problemas clínicos (neumotórax traumático abierto y ley de Boyle, acondicionamiento y expansión térmica de gases medicinales por ley de Charles, y gradientes de difusión de O₂/CO₂ en edema pulmonar) con retroalimentación explicativa inmediata sin calificaciones punitivas.
+                            </p>
+                        </div>
+
+                        <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-1.5">
+                            <span class="font-bold text-gray-800 text-xs text-accent flex items-center gap-1.5">
+                                <i class="fa-solid fa-book-bookmark"></i> Botón Formulario (Barra Superior)
+                            </span>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                • Consultá en cualquier momento el compendio con la ecuación de estado, las tres leyes particulares, la ley combinada, factores de conversión barométrica (atm, mmHg, Pa, cmH₂O) y valores gasométricos de referencia.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-gray-800 text-sm mb-1 text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb"></i> 3. Navegación Libre y Aprendizaje Autónomo
+                    </h4>
+                    <p>
+                        El simulador sigue el estándar universitario de la UCCuyo: sin penalizaciones punitivas, restricciones de avance ni cronómetros. Podés explorar libremente entre pestañas y experimentar con los modelos interactivos las veces que lo desees.
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+                <button onclick="closeTutorial()" class="px-4 py-2 bg-accent text-white rounded-xl text-xs font-semibold hover:bg-accent-hover transition">
+                    Entendido, comenzar exploración
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Formulario y Compendio Teórico -->
+    <div id="modal-formulas" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white max-w-2xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-accent p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-book-bookmark text-xl"></i>
+                    <h3 class="font-bold text-base">Compendio Teórico y Formulario de Gases Ideales</h3>
+                </div>
+                <button onclick="closeFormulasModal()" class="text-white hover:text-gray-200 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-4 text-xs text-gray-700 custom-scroll leading-relaxed">
+                <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+                    <h4 class="font-bold text-accent text-xs uppercase mb-1">1. Ecuación de Estado del Gas Ideal</h4>
+                    <p class="mb-2">Relaciona las cuatro variables termodinámicas fundamentales de una masa de gas:</p>
+                    <div class="font-mono bg-white p-2.5 rounded-lg border border-gray-200 text-center font-bold text-accent text-sm">
+                        P &middot; V = n &middot; R &middot; T &nbsp;|&nbsp; R = 0.08205 atm&middot;L/(mol&middot;K)
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div class="p-3 rounded-xl bg-gray-50 border border-gray-200">
+                        <h4 class="font-bold text-slate-800 text-xs mb-0.5">Boyle-Mariotte</h4>
+                        <div class="text-[10px] text-gray-500 mb-1">T = constante (Isotérmico)</div>
+                        <div class="font-mono font-bold text-accent">P₁ &middot; V₁ = P₂ &middot; V₂</div>
+                        <p class="text-[10px] text-gray-600 mt-1">Presión y volumen son inversamente proporcionales.</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-gray-50 border border-gray-200">
+                        <h4 class="font-bold text-slate-800 text-xs mb-0.5">Ley de Charles</h4>
+                        <div class="text-[10px] text-gray-500 mb-1">P = constante (Isobárico)</div>
+                        <div class="font-mono font-bold text-accent">V₁ / T₁ = V₂ / T₂</div>
+                        <p class="text-[10px] text-gray-600 mt-1">Volumen y temperatura absoluta son directamente proporcionales.</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-gray-50 border border-gray-200">
+                        <h4 class="font-bold text-slate-800 text-xs mb-0.5">Gay-Lussac</h4>
+                        <div class="text-[10px] text-gray-500 mb-1">V = constante (Isocórico)</div>
+                        <div class="font-mono font-bold text-accent">P₁ / T₁ = P₂ / T₂</div>
+                        <p class="text-[10px] text-gray-600 mt-1">Presión y temperatura absoluta son directamente proporcionales.</p>
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-gray-50 border border-gray-200">
+                    <h4 class="font-bold text-accent text-xs uppercase mb-1">2. Ley General de los Gases</h4>
+                    <p class="mb-2">Aplica cuando una misma masa de gas (n constante) cambia simultáneamente de presión, volumen y temperatura:</p>
+                    <div class="font-mono bg-white p-2 rounded-lg border border-gray-200 text-center font-bold text-slate-800 text-sm">
+                        (P₁ &middot; V₁) / T₁ = (P₂ &middot; V₂) / T₂
+                    </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-accent-light border border-accent/20 text-gray-800">
+                    <h4 class="font-bold text-accent text-xs uppercase mb-1">3. Aplicaciones y Conversiones Fisiológicas</h4>
+                    <p class="text-[11px] leading-relaxed text-gray-600">
+                        • <strong>Equivalencias de Presión:</strong> 1 atm = 760 mmHg = 101325 Pa = 1033 cmH₂O.<br>
+                        • <strong>Escala Kelvin:</strong> K = &deg;C + 273.15 (escala obligatoria en termodinámica).<br>
+                        • <strong>Mecánica Ventilatoria (Boyle):</strong> Inspiración (&uarr; V &rarr; &darr; Palv &rarr; entrada de aire); Espiración (&darr; V &rarr; &uarr; Palv &rarr; salida de aire).<br>
+                        • <strong>Presiones Parciales:</strong> En alvéolo PO₂ = 104 mmHg y PCO₂ = 40 mmHg; en sangre venosa PO₂ = 40 mmHg y PCO₂ = 45 mmHg.
+                    </p>
+                </div>
+            </div>
+
+            <div class="p-4 bg-gray-50 border-t border-gray-100 flex justify-end">
+                <button onclick="closeFormulasModal()" class="px-4 py-2 bg-accent text-white rounded-xl text-xs font-semibold hover:bg-accent-hover transition">
+                    Cerrar Formulario
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie de Página Institucional Oficial -->
+    <footer class="bg-white border-t border-gray-200 py-3 text-center text-xs text-gray-500 font-medium">
+        Desarrollado por vesalio - Todos los derechos reservados
+    </footer>
+
+    <!-- Lógica de la Aplicación en JavaScript -->
+    <script>
+        const R_CONST = 0.08205; // atm * L / (mol * K)
+        let currentLaw = 'boyle';
+        let bioCondition = 'normal';
+
+        // Estado del Módulo 1
+        let m1Particles = [];
+        let m1State = { P: 1.0, V: 24.45, n: 1.0, T: 298 };
+
+        // Navegación por pestañas laterales
+        function switchTab(targetId) {
+            document.querySelectorAll('.module-section').forEach(function(sec) { sec.classList.add('hidden'); });
+            const target = document.getElementById(targetId);
+            if (target) target.classList.remove('hidden');
+
+            const btnIds = ['btn-tab-estado', 'btn-tab-particulares', 'btn-tab-general', 'btn-tab-respiratoria', 'btn-tab-casos'];
+            btnIds.forEach(function(id) {
+                const btn = document.getElementById(id);
+                if (!btn) return;
+                btn.className = "text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-medium transition";
+            });
+
+            const activeBtn = document.getElementById('btn-' + targetId);
+            if (activeBtn) {
+                activeBtn.className = "bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-sm font-semibold transition shadow-sm";
+            }
+
+            if (targetId === 'tab-particulares') {
+                drawM2Chart();
+            } else if (targetId === 'tab-respiratoria') {
+                resizeBioCanvas();
+            }
+        }
+
+        // ================= LÓGICA MÓDULO 1 =================
+        const m1Canvas = document.getElementById('m1-canvas');
+        const m1Ctx = m1Canvas.getContext('2d');
+
+        function resizeM1Canvas() {
+            if (!m1Canvas) return;
+            const rect = m1Canvas.parentElement.getBoundingClientRect();
+            m1Canvas.width = rect.width || 500;
+            m1Canvas.height = rect.height || 320;
+            initM1Particles();
+        }
+
+        function initM1Particles() {
+            m1Particles = [];
+            const particleCount = Math.round(m1State.n * 35);
+            const w = m1Canvas.width;
+            const h = m1Canvas.height;
+            const chamberLeft = w * 0.15;
+            const chamberRight = w * 0.85;
+            const chamberBottom = h - 25;
+            const pistonY = 25 + (1 - (m1State.V / 50.0)) * (chamberBottom - 50);
+
+            for (let i = 0; i < particleCount; i++) {
+                const speed = 1.2 + Math.sqrt(m1State.T / 298) * 1.8;
+                const angle = Math.random() * Math.PI * 2;
+                m1Particles.push({
+                    x: chamberLeft + 15 + Math.random() * (chamberRight - chamberLeft - 30),
+                    y: pistonY + 15 + Math.random() * (chamberBottom - pistonY - 30),
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    r: 3.5
+                });
+            }
+        }
+
+        function updateModule1() {
+            m1State.n = parseFloat(document.getElementById('m1-slider-n').value);
+            m1State.V = parseFloat(document.getElementById('m1-slider-v').value);
+            m1State.T = parseFloat(document.getElementById('m1-slider-t').value);
+
+            // Ecuación de Estado: P = (n·R·T) / V
+            m1State.P = (m1State.n * R_CONST * m1State.T) / m1State.V;
+
+            document.getElementById('m1-val-n').textContent = m1State.n.toFixed(2) + " mol";
+            document.getElementById('m1-val-v').textContent = m1State.V.toFixed(2) + " L";
+            document.getElementById('m1-val-t').textContent = m1State.T.toFixed(0) + " K (" + (m1State.T - 273).toFixed(0) + " °C)";
+
+            document.getElementById('m1-hud-p').textContent = m1State.P.toFixed(2);
+            document.getElementById('m1-hud-v').textContent = m1State.V.toFixed(2);
+            document.getElementById('m1-hud-n').textContent = m1State.n.toFixed(2);
+            document.getElementById('m1-hud-t').textContent = m1State.T.toFixed(0);
+            document.getElementById('m1-hud-tc').textContent = (m1State.T - 273).toFixed(0);
+
+            document.getElementById('m1-equation-preview').innerHTML =
+                "P = (" + m1State.n.toFixed(2) + " &middot; 0.08205 &middot; " + m1State.T.toFixed(0) + ") / " + m1State.V.toFixed(2) + " = <strong>" + m1State.P.toFixed(2) + " atm</strong>";
+
+            const collisions = Math.round((m1State.P * 125) / Math.sqrt(m1State.T / 298));
+            document.getElementById('m1-collision-rate').textContent = "Impactos: " + collisions + " /s";
+
+            initM1Particles();
+        }
+
+        function animateM1Piston() {
+            if (m1Ctx && m1Canvas.width > 0) {
+                const w = m1Canvas.width;
+                const h = m1Canvas.height;
+                const chamberLeft = w * 0.15;
+                const chamberRight = w * 0.85;
+                const chamberBottom = h - 25;
+                const pistonY = 25 + (1 - (m1State.V / 50.0)) * (chamberBottom - 50);
+
+                m1Ctx.clearRect(0, 0, w, h);
+
+                // Paredes del cilindro
+                m1Ctx.strokeStyle = '#64748b';
+                m1Ctx.lineWidth = 5;
+                m1Ctx.beginPath();
+                m1Ctx.moveTo(chamberLeft, 20);
+                m1Ctx.lineTo(chamberLeft, chamberBottom);
+                m1Ctx.lineTo(chamberRight, chamberBottom);
+                m1Ctx.lineTo(chamberRight, 20);
+                m1Ctx.stroke();
+
+                // Brillo térmico
+                const tNorm = (m1State.T - 150) / 450;
+                const rCol = Math.round(30 + tNorm * 225);
+                const bCol = Math.round(230 - tNorm * 200);
+                m1Ctx.fillStyle = 'rgba(' + rCol + ', 90, ' + bCol + ', 0.2)';
+                m1Ctx.fillRect(chamberLeft + 3, pistonY, chamberRight - chamberLeft - 6, chamberBottom - pistonY - 3);
+
+                // Émbolo móvil
+                m1Ctx.fillStyle = '#94a3b8';
+                m1Ctx.fillRect(chamberLeft + 3, pistonY - 14, chamberRight - chamberLeft - 6, 14);
+                m1Ctx.fillStyle = '#475569';
+                const midX = (chamberLeft + chamberRight) / 2;
+                m1Ctx.fillRect(midX - 8, 0, 16, pistonY - 14);
+
+                // Partículas del gas
+                const particleColor = 'rgb(' + rCol + ', 160, ' + bCol + ')';
+                m1Particles.forEach(function(p) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x - p.r < chamberLeft + 4) {
+                        p.x = chamberLeft + 4 + p.r;
+                        p.vx *= -1;
+                    }
+                    if (p.x + p.r > chamberRight - 4) {
+                        p.x = chamberRight - 4 - p.r;
+                        p.vx *= -1;
+                    }
+                    if (p.y - p.r < pistonY + 2) {
+                        p.y = pistonY + 2 + p.r;
+                        p.vy = Math.abs(p.vy);
+                    }
+                    if (p.y + p.r > chamberBottom - 4) {
+                        p.y = chamberBottom - 4 - p.r;
+                        p.vy = -Math.abs(p.vy);
+                    }
+
+                    m1Ctx.beginPath();
+                    m1Ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    m1Ctx.fillStyle = particleColor;
+                    m1Ctx.fill();
+                });
+            }
+            requestAnimationFrame(animateM1Piston);
+        }
+
+        // ================= LÓGICA MÓDULO 2 =================
+        function selectParticularLaw(law) {
+            currentLaw = law;
+            ['boyle', 'charles', 'gay'].forEach(function(l) {
+                const b = document.getElementById('btn-law-' + l);
+                if (b) {
+                    if (l === law) {
+                        b.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-accent text-white shadow-xs transition";
+                    } else {
+                        b.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-200 transition";
+                    }
+                }
+            });
+
+            const slider = document.getElementById('m2-slider');
+            const sliderLabel = document.getElementById('m2-slider-label');
+
+            if (law === 'boyle') {
+                document.getElementById('m2-graph-title').textContent = 'Curva Isotérmica: Presión vs. Volumen (Boyle)';
+                document.getElementById('m2-graph-subtitle').textContent = 'Relación inversa a temperatura y moles constantes (T = 300 K).';
+                document.getElementById('m2-constant-indicator').textContent = 'T = 300 K (Constante)';
+                document.getElementById('m2-theory-explanation').innerHTML =
+                    '<strong>Ley de Boyle-Mariotte:</strong> A temperatura constante, el volumen de una masa fija de gas es inversamente proporcional a la presión que soporta: <strong>P₁ &middot; V₁ = P₂ &middot; V₂</strong>.';
+                sliderLabel.textContent = 'Modificar Volumen Final (V₂):';
+                slider.min = 5;
+                slider.max = 40;
+                slider.step = 0.5;
+                slider.value = 20;
+            } else if (law === 'charles') {
+                document.getElementById('m2-graph-title').textContent = 'Curva Isobárica: Volumen vs. Temperatura (Charles)';
+                document.getElementById('m2-graph-subtitle').textContent = 'Relación directa a presión y moles constantes (P = 1.0 atm).';
+                document.getElementById('m2-constant-indicator').textContent = 'P = 1.0 atm (Constante)';
+                document.getElementById('m2-theory-explanation').innerHTML =
+                    '<strong>Ley de Charles:</strong> A presión constante, el volumen ocupado por un gas es directamente proporcional a su temperatura absoluta: <strong>V₁ / T₁ = V₂ / T₂</strong>.';
+                sliderLabel.textContent = 'Modificar Temperatura Final (T₂ en K):';
+                slider.min = 200;
+                slider.max = 600;
+                slider.step = 5;
+                slider.value = 400;
+            } else {
+                document.getElementById('m2-graph-title').textContent = 'Curva Isocórica: Presión vs. Temperatura (Gay-Lussac)';
+                document.getElementById('m2-graph-subtitle').textContent = 'Relación directa a volumen y moles constantes (V = 10.0 L).';
+                document.getElementById('m2-constant-indicator').textContent = 'V = 10.0 L (Constante)';
+                document.getElementById('m2-theory-explanation').innerHTML =
+                    '<strong>Ley de Gay-Lussac:</strong> A volumen constante, la presión de una masa fija de gas es directamente proporcional a su temperatura absoluta: <strong>P₁ / T₁ = P₂ / T₂</strong>.';
+                sliderLabel.textContent = 'Modificar Temperatura Final (T₂ en K):';
+                slider.min = 200;
+                slider.max = 600;
+                slider.step = 5;
+                slider.value = 400;
+            }
+
+            updateModule2();
+            drawM2Chart();
+        }
+
+        function updateModule2() {
+            const sliderVal = parseFloat(document.getElementById('m2-slider').value);
+
+            if (currentLaw === 'boyle') {
+                const P1 = 2.0;
+                const V1 = 12.0;
+                const V2 = sliderVal;
+                const P2 = (P1 * V1) / V2;
+
+                document.getElementById('m2-state1-varA').textContent = 'P₁ = ' + P1.toFixed(2) + ' atm';
+                document.getElementById('m2-state1-varB').textContent = 'V₁ = ' + V1.toFixed(2) + ' L';
+                document.getElementById('m2-state2-varA').textContent = 'P₂ = ' + P2.toFixed(2) + ' atm';
+                document.getElementById('m2-state2-varB').textContent = 'V₂ = ' + V2.toFixed(2) + ' L';
+                document.getElementById('m2-slider-val').textContent = V2.toFixed(1) + ' L';
+
+                document.getElementById('m2-equation-substitution').textContent =
+                    '(' + P1.toFixed(2) + ' atm) · (' + V1.toFixed(2) + ' L) = (' + P2.toFixed(2) + ' atm) · (' + V2.toFixed(2) + ' L) = 24.00 atm·L';
+            } else if (currentLaw === 'charles') {
+                const V1 = 10.0;
+                const T1 = 300.0;
+                const T2 = sliderVal;
+                const V2 = (V1 * T2) / T1;
+
+                document.getElementById('m2-state1-varA').textContent = 'V₁ = ' + V1.toFixed(1) + ' L';
+                document.getElementById('m2-state1-varB').textContent = 'T₁ = ' + T1.toFixed(0) + ' K';
+                document.getElementById('m2-state2-varA').textContent = 'V₂ = ' + V2.toFixed(2) + ' L';
+                document.getElementById('m2-state2-varB').textContent = 'T₂ = ' + T2.toFixed(0) + ' K';
+                document.getElementById('m2-slider-val').textContent = T2.toFixed(0) + ' K';
+
+                document.getElementById('m2-equation-substitution').textContent =
+                    '(' + V1.toFixed(1) + ' L / ' + T1.toFixed(0) + ' K) = (' + V2.toFixed(2) + ' L / ' + T2.toFixed(0) + ' K) = 0.0333 L/K';
+            } else {
+                const P1 = 1.0;
+                const T1 = 300.0;
+                const T2 = sliderVal;
+                const P2 = (P1 * T2) / T1;
+
+                document.getElementById('m2-state1-varA').textContent = 'P₁ = ' + P1.toFixed(2) + ' atm';
+                document.getElementById('m2-state1-varB').textContent = 'T₁ = ' + T1.toFixed(0) + ' K';
+                document.getElementById('m2-state2-varA').textContent = 'P₂ = ' + P2.toFixed(2) + ' atm';
+                document.getElementById('m2-state2-varB').textContent = 'T₂ = ' + T2.toFixed(0) + ' K';
+                document.getElementById('m2-slider-val').textContent = T2.toFixed(0) + ' K';
+
+                document.getElementById('m2-equation-substitution').textContent =
+                    '(' + P1.toFixed(2) + ' atm / ' + T1.toFixed(0) + ' K) = (' + P2.toFixed(2) + ' atm / ' + T2.toFixed(0) + ' K) = 0.0033 atm/K';
+            }
+
+            drawM2Chart();
+        }
+
+        function drawM2Chart() {
+            const canvas = document.getElementById('m2-chart-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width || 480;
+            canvas.height = rect.height || 300;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const padLeft = 45;
+            const padBottom = 35;
+            const plotW = w - padLeft - 20;
+            const plotH = h - padBottom - 20;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Ejes cartesianos
+            ctx.strokeStyle = '#94a3b8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padLeft, 20);
+            ctx.lineTo(padLeft, h - padBottom);
+            ctx.lineTo(w - 20, h - padBottom);
+            ctx.stroke();
+
+            ctx.font = '11px Outfit, sans-serif';
+            ctx.fillStyle = '#64748b';
+
+            if (currentLaw === 'boyle') {
+                ctx.fillText('P (atm)', 10, 25);
+                ctx.fillText('V (L)', w - 35, h - 10);
+
+                // Curva P = 24 / V
+                ctx.strokeStyle = '#436600';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                for (let v = 5; v <= 40; v += 0.5) {
+                    const p = 24 / v;
+                    const x = padLeft + ((v - 5) / 35) * plotW;
+                    const y = (h - padBottom) - (p / 5) * plotH;
+                    if (v === 5) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                // Punto actual
+                const curV = parseFloat(document.getElementById('m2-slider').value);
+                const curP = 24 / curV;
+                const px = padLeft + ((curV - 5) / 35) * plotW;
+                const py = (h - padBottom) - (curP / 5) * plotH;
+
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath();
+                ctx.arc(px, py, 6, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (currentLaw === 'charles') {
+                ctx.fillText('V (L)', 10, 25);
+                ctx.fillText('T (K)', w - 35, h - 10);
+
+                ctx.strokeStyle = '#436600';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                for (let t = 200; t <= 600; t += 10) {
+                    const v = (10 / 300) * t;
+                    const x = padLeft + ((t - 200) / 400) * plotW;
+                    const y = (h - padBottom) - (v / 22) * plotH;
+                    if (t === 200) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                const curT = parseFloat(document.getElementById('m2-slider').value);
+                const curV = (10 / 300) * curT;
+                const px = padLeft + ((curT - 200) / 400) * plotW;
+                const py = (h - padBottom) - (curV / 22) * plotH;
+
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath();
+                ctx.arc(px, py, 6, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                ctx.fillText('P (atm)', 10, 25);
+                ctx.fillText('T (K)', w - 35, h - 10);
+
+                ctx.strokeStyle = '#436600';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                for (let t = 200; t <= 600; t += 10) {
+                    const p = (1 / 300) * t;
+                    const x = padLeft + ((t - 200) / 400) * plotW;
+                    const y = (h - padBottom) - (p / 2.2) * plotH;
+                    if (t === 200) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                const curT = parseFloat(document.getElementById('m2-slider').value);
+                const curP = (1 / 300) * curT;
+                const px = padLeft + ((curT - 200) / 400) * plotW;
+                const py = (h - padBottom) - (curP / 2.2) * plotH;
+
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath();
+                ctx.arc(px, py, 6, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // ================= LÓGICA MÓDULO 3 =================
+        function updateModule3() {
+            const P1 = parseFloat(document.getElementById('m3-p1').value);
+            const V1 = parseFloat(document.getElementById('m3-v1').value);
+            const T1 = parseFloat(document.getElementById('m3-t1').value);
+            const target = document.getElementById('m3-solve-target').value;
+
+            let P2 = parseFloat(document.getElementById('m3-p2').value);
+            let V2 = parseFloat(document.getElementById('m3-v2').value);
+            let T2 = parseFloat(document.getElementById('m3-t2').value);
+
+            document.getElementById('m3-p2').disabled = (target === 'P2');
+            document.getElementById('m3-v2').disabled = (target === 'V2');
+            document.getElementById('m3-t2').disabled = (target === 'T2');
+
+            const k = (P1 * V1) / T1;
+            let formulaStr = '';
+
+            if (target === 'V2') {
+                V2 = (P1 * V1 * T2) / (T1 * P2);
+                formulaStr = 'V₂ = (P₁ · V₁ · T₂) / (T₁ · P₂) = (' + P1.toFixed(1) + ' · ' + V1.toFixed(1) + ' · ' + T2.toFixed(0) + ') / (' + T1.toFixed(0) + ' · ' + P2.toFixed(1) + ') = ' + V2.toFixed(2) + ' L';
+            } else if (target === 'P2') {
+                P2 = (P1 * V1 * T2) / (T1 * V2);
+                formulaStr = 'P₂ = (P₁ · V₁ · T₂) / (T₁ · V₂) = (' + P1.toFixed(1) + ' · ' + V1.toFixed(1) + ' · ' + T2.toFixed(0) + ') / (' + T1.toFixed(0) + ' · ' + V2.toFixed(1) + ') = ' + P2.toFixed(2) + ' atm';
+            } else {
+                T2 = (P2 * V2 * T1) / (P1 * V1);
+                formulaStr = 'T₂ = (P₂ · V₂ · T₁) / (P₁ · V₁) = (' + P2.toFixed(1) + ' · ' + V2.toFixed(1) + ' · ' + T1.toFixed(0) + ') / (' + P1.toFixed(1) + ' · ' + V1.toFixed(1) + ') = ' + T2.toFixed(1) + ' K';
+            }
+
+            document.getElementById('m3-lbl-p1').textContent = P1.toFixed(2) + " atm";
+            document.getElementById('m3-lbl-v1').textContent = V1.toFixed(1) + " L";
+            document.getElementById('m3-lbl-t1').textContent = T1.toFixed(0) + " K";
+
+            document.getElementById('m3-lbl-p2').textContent = P2.toFixed(2) + " atm";
+            document.getElementById('m3-lbl-v2').textContent = V2.toFixed(2) + " L";
+            document.getElementById('m3-lbl-t2').textContent = T2.toFixed(1) + " K";
+
+            document.getElementById('m3-ratio-constant').textContent = 'k = P·V/T = ' + k.toFixed(4) + ' atm·L/K';
+            document.getElementById('m3-algebraic-step').textContent = formulaStr;
+        }
+
+        // ================= LÓGICA MÓDULO 4 =================
+        function updateVentilationSimulator() {
+            const dVal = parseInt(document.getElementById('bio-diaphragm-slider').value, 10);
+            const patm = 760;
+            const deltaP = - (dVal / 100) * 1.5;
+            const palv = patm + deltaP;
+
+            document.getElementById('bio-palv-val').textContent = palv.toFixed(1) + " mmHg";
+            document.getElementById('bio-grad-val').textContent = (deltaP > 0 ? '+' : '') + deltaP.toFixed(1) + " mmHg";
+
+            const scaleFactor = 1 + (dVal / 100) * 0.14;
+            document.getElementById('svg-lungs-group').style.transform = 'scale(' + scaleFactor + ')';
+            const curveY = 165 + (dVal / 100) * 28;
+            document.getElementById('svg-diaphragm').setAttribute('d', 'M70,195 Q180,' + curveY + ' 290,195');
+
+            const badge = document.getElementById('bio-phase-badge');
+            const flow = document.getElementById('bio-airflow-indicator');
+            const arrows = document.getElementById('svg-air-arrows');
+
+            if (dVal > 10) {
+                badge.textContent = 'INSPIRACIÓN (Volumen ↑, Presión ↓)';
+                badge.className = 'px-2.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30 font-bold';
+                flow.textContent = 'Flujo: Entrada de Aire ↓ (Palv < Patm)';
+                arrows.setAttribute('opacity', '1');
+                document.getElementById('bio-slider-label').textContent = 'Inspiración (+' + dVal + '%)';
+            } else if (dVal < -10) {
+                badge.textContent = 'ESPIRACIÓN (Volumen ↓, Presión ↑)';
+                badge.className = 'px-2.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 font-bold';
+                flow.textContent = 'Flujo: Salida de Aire ↑ (Palv > Patm)';
+                arrows.setAttribute('opacity', '1');
+                document.getElementById('bio-slider-label').textContent = 'Espiración (' + dVal + '%)';
+            } else {
+                badge.textContent = 'EN REPOSO (Equilibrio Palv = Patm)';
+                badge.className = 'px-2.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold';
+                flow.textContent = 'Flujo Neto: 0 L/s';
+                arrows.setAttribute('opacity', '0');
+                document.getElementById('bio-slider-label').textContent = 'Reposo (0%)';
+            }
+        }
+
+        const bioCanvas = document.getElementById('bio-diffusion-canvas');
+        const bioCtx = bioCanvas.getContext('2d');
+        let bioParticles = [];
+
+        function resizeBioCanvas() {
+            if (!bioCanvas) return;
+            const rect = bioCanvas.parentElement.getBoundingClientRect();
+            bioCanvas.width = rect.width || 520;
+            bioCanvas.height = rect.height || 208;
+            initBioParticles();
+        }
+
+        function initBioParticles() {
+            bioParticles = [];
+            for (let i = 0; i < 28; i++) {
+                bioParticles.push({
+                    type: i < 16 ? 'O2' : 'CO2',
+                    x: 40 + Math.random() * (bioCanvas.width - 80),
+                    y: i < 16 ? 25 + Math.random() * 60 : 125 + Math.random() * 60,
+                    vx: (Math.random() - 0.5) * 1.2,
+                    vy: i < 16 ? 0.45 + Math.random() * 0.6 : -(0.45 + Math.random() * 0.6)
+                });
+            }
+        }
+
+        function updatePartialPressuresCondition() {
+            bioCondition = document.getElementById('bio-condition-select').value;
+            const configs = {
+                normal: { alvO2: 104, capO2: 40, capCO2: 45, alvCO2: 40 },
+                altitude: { alvO2: 62, capO2: 35, capCO2: 42, alvCO2: 38 },
+                hyperoxia: { alvO2: 240, capO2: 40, capCO2: 45, alvCO2: 40 }
+            };
+            const c = configs[bioCondition];
+            document.getElementById('pp-alv-o2').textContent = c.alvO2 + " mmHg";
+            document.getElementById('pp-cap-o2').textContent = c.capO2 + " mmHg";
+            document.getElementById('pp-grad-o2').textContent = "+" + (c.alvO2 - c.capO2) + " mmHg";
+
+            document.getElementById('pp-cap-co2').textContent = c.capCO2 + " mmHg";
+            document.getElementById('pp-alv-co2').textContent = c.alvCO2 + " mmHg";
+            document.getElementById('pp-grad-co2').textContent = "+" + (c.capCO2 - c.alvCO2) + " mmHg";
+        }
+
+        function animateBioDiffusion() {
+            if (bioCtx && bioCanvas.width > 0) {
+                const w = bioCanvas.width;
+                const h = bioCanvas.height;
+                const midY = h * 0.52;
+
+                bioCtx.clearRect(0, 0, w, h);
+
+                // Zona Alveolar (Arriba)
+                bioCtx.fillStyle = 'rgba(14, 165, 233, 0.12)';
+                bioCtx.fillRect(0, 0, w, midY);
+
+                // Capilar Sanguíneo (Abajo)
+                bioCtx.fillStyle = 'rgba(225, 29, 72, 0.22)';
+                bioCtx.fillRect(0, midY, w, h - midY);
+
+                // Membrana Alvéolo-Capilar
+                bioCtx.strokeStyle = '#f8fafc';
+                bioCtx.setLineDash([6, 4]);
+                bioCtx.lineWidth = 2;
+                bioCtx.beginPath();
+                bioCtx.moveTo(0, midY);
+                bioCtx.lineTo(w, midY);
+                bioCtx.stroke();
+                bioCtx.setLineDash([]);
+
+                bioCtx.fillStyle = '#bae6fd';
+                bioCtx.font = '10px JetBrains Mono';
+                bioCtx.fillText('ESPACIO ALVEOLAR', 15, 20);
+
+                bioCtx.fillStyle = '#fecdd3';
+                bioCtx.fillText('CAPILAR SANGUÍNEO PULMONAR', 15, h - 15);
+
+                bioParticles.forEach(function(p) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 10) p.x = w - 10;
+                    if (p.x > w - 10) p.x = 10;
+
+                    if (p.type === 'O2') {
+                        if (p.y > h - 10) p.y = 15;
+                    } else {
+                        if (p.y < 10) p.y = h - 15;
+                    }
+
+                    bioCtx.beginPath();
+                    bioCtx.arc(p.x, p.y, p.type === 'O2' ? 4 : 5, 0, Math.PI * 2);
+                    bioCtx.fillStyle = (p.type === 'O2') ? '#38bdf8' : '#fb7185';
+                    bioCtx.fill();
+                });
+            }
+            requestAnimationFrame(animateBioDiffusion);
+        }
+
+        // ================= CASOS CLÍNICOS (MÓDULO 5) =================
+        function checkCaseFQ3(caseNum, option) {
+            const feedback = document.getElementById('feedback-fq3-' + caseNum);
+            if (!feedback) return;
+            feedback.classList.remove('hidden');
+
+            if (caseNum === 1) {
+                if (option === 'A') {
+                    feedback.className = "mt-2 p-3 rounded-xl text-xs leading-relaxed bg-emerald-50 text-emerald-900 border border-emerald-200";
+                    feedback.innerHTML = "<strong>¡Excelente razonamiento biofísico!</strong> El espacio intrapleural mantiene normalmente una presión subatmosférica (-5 a -8 cmH₂O) generada por el retroceso elástico opuesto de la pared torácica y los pulmones. Al penetrar aire ambiental, la presión intrapleural se iguala a la atmosférica y desaparece el gradiente transmural; según la Ley de Boyle, al cesar la tracción expansiva sobre el volumen alveolar, el pulmón se colapsa inmediatamente.";
+                } else {
+                    feedback.className = "mt-2 p-3 rounded-xl text-xs leading-relaxed bg-rose-50 text-rose-900 border border-rose-200";
+                    feedback.innerHTML = "<strong>Incorrecto:</strong> La temperatura corporal permanece constante; el colapso pulmonar obedece a la igualación de presiones y pérdida de la presión subatmosférica intrapleural descrita por la Ley de Boyle.";
+                }
+            } else if (caseNum === 2) {
+                if (option === 'B') {
+                    feedback.className = "mt-2 p-3 rounded-xl text-xs leading-relaxed bg-emerald-50 text-emerald-900 border border-emerald-200";
+                    feedback.innerHTML = "<strong>¡Respuesta correcta!</strong> Por la Ley de Charles (V₁/T₁ = V₂/T₂ a presión constante), al ingresar el gas a 20 °C (293 K) y calentarse a 37 °C (310 K) en las vías aéreas, el gas se expande aproximadamente un 6% de su volumen inicial. Este fenómeno biofísico explica por qué en ventilación mecánica se corrigen los volúmenes a condiciones BTPS (Body Temperature, Pressure, Saturated).";
+                } else {
+                    feedback.className = "mt-2 p-3 rounded-xl text-xs leading-relaxed bg-rose-50 text-rose-900 border border-rose-200";
+                    feedback.innerHTML = "<strong>Incorrecto:</strong> Al aumentar la temperatura de un gas a presión constante, el volumen se expande proporcionalmente a la temperatura absoluta (T en Kelvin), no se destruye ni se reduce.";
+                }
+            } else if (caseNum === 3) {
+                if (option === 'A') {
+                    feedback.className = "mt-2 p-3 rounded-xl text-xs leading-relaxed bg-emerald-50 text-emerald-900 border border-emerald-200";
+                    feedback.innerHTML = "<strong>¡Criterio clínico exacto!</strong> La ley de difusión gaseosa depende tanto del gradiente de presión parcial como de la solubilidad del gas en el medio líquido. El CO₂ es ~20 veces más soluble en agua que el O₂; ante el engrosamiento edematoso de la membrana alveolar, la difusión del oxígeno se desploma provocando hipoxemia grave, mientras que el CO₂ logra difundir temporalmente a través del líquido acumulado.";
+                } else {
+                    feedback.className = "mt-2 p-3 rounded-xl text-xs leading-relaxed bg-rose-50 text-rose-900 border border-rose-200";
+                    feedback.innerHTML = "<strong>Incorrecto:</strong> El intercambio gaseoso alvéolo-capilar es un proceso 100% pasivo regido por gradientes de presión parcial y leyes biofísicas de difusión; no requiere transporte activo por ATP.";
+                }
+            }
+        }
+
+        // ================= MODALES =================
+        function openTutorial() {
+            document.getElementById('modal-tutorial').classList.remove('hidden');
+        }
+
+        function closeTutorial() {
+            document.getElementById('modal-tutorial').classList.add('hidden');
+        }
+
+        function openFormulasModal() {
+            document.getElementById('modal-formulas').classList.remove('hidden');
+        }
+
+        function closeFormulasModal() {
+            document.getElementById('modal-formulas').classList.add('hidden');
+        }
+
+        // Inicialización
+        window.onload = function() {
+            resizeM1Canvas();
+            updateModule1();
+            requestAnimationFrame(animateM1Piston);
+            updateModule2();
+            updateModule3();
+            updateVentilationSimulator();
+            resizeBioCanvas();
+            requestAnimationFrame(animateBioDiffusion);
+        };
+
+        window.onresize = function() {
+            resizeM1Canvas();
+            drawM2Chart();
+            resizeBioCanvas();
+        };
+    </script>
+</body>
+</html>
